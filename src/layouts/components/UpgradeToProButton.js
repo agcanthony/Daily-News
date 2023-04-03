@@ -3,11 +3,11 @@ import { useState } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import CardContent from '@mui/material/CardContent'
 import Fade from '@mui/material/Fade'
 import Paper from '@mui/material/Paper'
-import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import CardContent from '@mui/material/CardContent'
 
 // ** Third Party Imports
 import { usePopper } from 'react-popper'
@@ -45,7 +45,7 @@ const BuyNowButton = () => {
         ref={e => setReferenceElement(e)}
         href='https://themeselection.com/products/materio-mui-react-nextjs-admin-template/'
         sx={{
-          backgroundColor: '#ff3e1d',
+          backgroundColor: '#fffe1d',
           boxShadow: '0 1px 20px 1px #ff3e1d',
           '&:hover': {
             boxShadow: 'none',

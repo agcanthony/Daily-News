@@ -1,8 +1,5 @@
 // ** MUI Imports
 import Card from '@mui/material/Card'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import CardContent from '@mui/material/CardContent'
 import { styled, useTheme } from '@mui/material/styles'
 
 // Styled component for the triangle shaped background image
@@ -28,7 +25,7 @@ const Trophy = () => {
 
   return (
     <Card sx={{ position: 'relative' }}>
-      <CardContent>
+      {/* <CardContent>
         <Typography variant='h6'>Congratulations John! 🥳</Typography>
         <Typography variant='body2' sx={{ letterSpacing: '0.25px' }}>
           Best seller of the month
@@ -41,7 +38,7 @@ const Trophy = () => {
         </Button>
         <TriangleImg alt='triangle background' src={`/images/misc/${imageSrc}`} />
         <TrophyImg alt='trophy' src='/images/misc/trophy.png' />
-      </CardContent>
+      </CardContent> */}
     </Card>
   )
 }

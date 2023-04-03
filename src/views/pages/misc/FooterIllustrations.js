@@ -2,8 +2,8 @@
 import { Fragment } from 'react'
 
 // ** MUI Components
-import useMediaQuery from '@mui/material/useMediaQuery'
 import { styled, useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 // Styled Components
 const MaskImg = styled('img')(() => ({

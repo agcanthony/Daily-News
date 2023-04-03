@@ -10,7 +10,7 @@ import VerticalLayout from 'src/@core/layouts/VerticalLayout'
 import VerticalNavItems from 'src/navigation/vertical'
 
 // ** Component Import
-import UpgradeToProButton from './components/UpgradeToProButton'
+// import UpgradeToProButton from './components/UpgradeToProButton'
 import VerticalAppBarContent from './components/vertical/AppBarContent'
 
 // ** Hook Import
@@ -38,7 +38,7 @@ const UserLayout = ({ children }) => {
           rel='noreferrer'
           href='https://themeselection.com/products/materio-mui-react-nextjs-admin-template/'
         >
-          <img width={230} alt='upgrade to premium' src={`/images/misc/upgrade-banner-${settings.mode}.png`} />
+          {/* <img width={230} alt='upgrade to premium' src={`/images/misc/upgrade-banner-${settings.mode}.png`} /> */}
         </a>
       </Box>
     )
@@ -63,7 +63,7 @@ const UserLayout = ({ children }) => {
       )}
     >
       {children}
-      <UpgradeToProButton />
+      {/* <UpgradeToProButton /> */}
     </VerticalLayout>
   )
 }
