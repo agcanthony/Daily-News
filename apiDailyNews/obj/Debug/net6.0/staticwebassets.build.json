@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "V6qZ8p7DAtDYI31x6HZrpvFqdHN81ERmhAT3IQ2v11M=",
+  "Source": "apiDailyNews",
+  "BasePath": "_content/apiDailyNews",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
