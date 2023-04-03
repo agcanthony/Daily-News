@@ -12,8 +12,8 @@ import { CacheProvider } from '@emotion/react'
 import themeConfig from 'src/configs/themeConfig'
 
 // ** Component Imports
-import UserLayout from 'src/layouts/UserLayout'
 import ThemeComponent from 'src/@core/theme/ThemeComponent'
+import UserLayout from 'src/layouts/UserLayout'
 
 // ** Contexts
 import { SettingsConsumer, SettingsProvider } from 'src/@core/context/settingsContext'
@@ -26,6 +26,8 @@ import 'react-perfect-scrollbar/dist/css/styles.css'
 
 // ** Global css styles
 import '../../styles/globals.css'
+
+import '../../public/assents/css/styles.css'
 
 const clientSideEmotionCache = createEmotionCache()
 

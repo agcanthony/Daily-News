@@ -2,10 +2,10 @@
 import Link from 'next/link'
 
 // ** MUI Components
-import Button from '@mui/material/Button'
-import { styled } from '@mui/material/styles'
-import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+import { styled } from '@mui/material/styles'
 
 // ** Layout Import
 import BlankLayout from 'src/@core/layouts/BlankLayout'
@@ -58,9 +58,16 @@ const Error404 = () => {
         <Link passHref href='/'>
           <Button component='a' variant='contained' sx={{ px: 5.5 }}>
             Back to Home
-          </Button>
+          </Button>          
+        </Link>
+        <br/>
+        <Link passHref href='/pages/login'>
+          <Button component='a' variant='contained' sx={{ px: 5.5 }}>
+            Login
+          </Button>          
         </Link>
       </Box>
+      
       <FooterIllustrations image={<TreeIllustration alt='tree' src='/images/pages/tree.png' />} />
     </Box>
   )

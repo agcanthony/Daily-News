@@ -1,101 +1,86 @@
-// ** MUI Imports
-import Grid from '@mui/material/Grid'
+/* eslint-disable react/jsx-no-undef */
+'use client'
 
-// ** Icons Imports
-import Poll from 'mdi-material-ui/Poll'
-import CurrencyUsd from 'mdi-material-ui/CurrencyUsd'
-import HelpCircleOutline from 'mdi-material-ui/HelpCircleOutline'
-import BriefcaseVariantOutline from 'mdi-material-ui/BriefcaseVariantOutline'
 
-// ** Custom Components Imports
-import CardStatisticsVerticalComponent from 'src/@core/components/card-statistics/card-stats-vertical'
+import Button from '@mui/material/Button';
+import Link from 'next/link';
+import { createContext } from "react";
+import { Container, Navbar } from "react-bootstrap";
 
-// ** Styled Component Import
-import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
+// ** Layout Import
+import BlankLayout from 'src/@core/layouts/BlankLayout';
+import CardBasic from './cards';
 
-// ** Demo Components Imports
-import Table from 'src/views/dashboard/Table'
-import Trophy from 'src/views/dashboard/Trophy'
-import TotalEarning from 'src/views/dashboard/TotalEarning'
-import StatisticsCard from 'src/views/dashboard/StatisticsCard'
-import WeeklyOverview from 'src/views/dashboard/WeeklyOverview'
-import DepositWithdraw from 'src/views/dashboard/DepositWithdraw'
-import SalesByCountries from 'src/views/dashboard/SalesByCountries'
+// import Swal from 'sweetalert2';
+// import withReactContent from 'sweetalert2-react-content';
+// import '../../public/assents/css/styles.css';
 
-const Dashboard = () => {
+
+
+export const MessageCallbackContext = createContext(null);
+
+
+
+  const handleMessageCallback = (msg) => {
+    if (msg.tipo !== 'nada') {
+      let icon = '';
+      if (msg.tipo === 'sucesso')
+        icon = 'success';
+      else if (msg.tipo === 'erro')
+        icon = 'error';
+
+      MySwal.fire({
+        position: 'center',
+        icon: icon,
+        title: msg.texto,
+        showConfirmButton: false,
+        timer: 4000,
+        toast: true
+      })
+    }
+  }
+
+const Home = () => {
   return (
-    <ApexChartWrapper>
-      <Grid container spacing={6}>
-        <Grid item xs={12} md={4}>
-          <Trophy />
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <StatisticsCard />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <WeeklyOverview />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <TotalEarning />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <Grid container spacing={6}>
-            <Grid item xs={6}>
-              <CardStatisticsVerticalComponent
-                stats='$25.6k'
-                icon={<Poll />}
-                color='success'
-                trendNumber='+42%'
-                title='Total Profit'
-                subtitle='Weekly Profit'
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <CardStatisticsVerticalComponent
-                stats='$78'
-                title='Refunds'
-                trend='negative'
-                color='secondary'
-                trendNumber='-15%'
-                subtitle='Past Month'
-                icon={<CurrencyUsd />}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <CardStatisticsVerticalComponent
-                stats='862'
-                trend='negative'
-                trendNumber='-18%'
-                title='New Project'
-                subtitle='Yearly Project'
-                icon={<BriefcaseVariantOutline />}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <CardStatisticsVerticalComponent
-                stats='15'
-                color='warning'
-                trend='negative'
-                trendNumber='-18%'
-                subtitle='Last Week'
-                title='Sales Queries'
-                icon={<HelpCircleOutline />}
-              />
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <SalesByCountries />
-        </Grid>
-        <Grid item xs={12} md={12} lg={8}>
-          <DepositWithdraw />
-        </Grid>
-        <Grid item xs={12}>
-          <Table />
-        </Grid>
-      </Grid>
-    </ApexChartWrapper>
+    <>
+      <Navbar className="navbar-Principal" variant="dark" expand="lg">
+        <Container className='nav-container'>
+          <Navbar.Brand href="#home" className='titulo'>Daily News</Navbar.Brand>
+          {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
+          <Navbar.Collapse id="basic-navbar-nav" >            
+            <Link passHref href='/pages/login'>
+                <Button component='a' variant='contained' sx={{ px: 5.5 }}>
+                  Login
+                </Button>
+            </Link>            
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+      
+      <section className='top'>
+        <div className='max-width'>
+          <div className='top-content'>
+            <div className='text-1'>
+              <h1>Daily-News</h1>
+            </div>
+            <div className='text-1'>
+              <h1>O Seu Blog de Noticias!</h1>
+            </div>
+          </div>
+        </div>
+      </section>
+      <CardBasic/>
+      <br />
+      <Navbar fixed="bottom" expand="lg" variant="light" bg="light">
+        <Container>
+          <Navbar.Brand href="#">Navbar</Navbar.Brand>
+        </Container>
+      </Navbar>
+    </>
   )
 }
 
-export default Dashboard
+Home.getLayout = page => <BlankLayout>{page}</BlankLayout>
+
+export default Home
+

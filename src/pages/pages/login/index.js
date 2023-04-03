@@ -8,27 +8,27 @@ import { useRouter } from 'next/router'
 // ** MUI Components
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import Checkbox from '@mui/material/Checkbox'
-import TextField from '@mui/material/TextField'
-import InputLabel from '@mui/material/InputLabel'
-import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
-import CardContent from '@mui/material/CardContent'
-import FormControl from '@mui/material/FormControl'
-import OutlinedInput from '@mui/material/OutlinedInput'
-import { styled, useTheme } from '@mui/material/styles'
 import MuiCard from '@mui/material/Card'
-import InputAdornment from '@mui/material/InputAdornment'
+import CardContent from '@mui/material/CardContent'
+import Checkbox from '@mui/material/Checkbox'
+import Divider from '@mui/material/Divider'
+import FormControl from '@mui/material/FormControl'
 import MuiFormControlLabel from '@mui/material/FormControlLabel'
+import IconButton from '@mui/material/IconButton'
+import InputAdornment from '@mui/material/InputAdornment'
+import InputLabel from '@mui/material/InputLabel'
+import OutlinedInput from '@mui/material/OutlinedInput'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import { styled, useTheme } from '@mui/material/styles'
 
 // ** Icons Imports
-import Google from 'mdi-material-ui/Google'
-import Github from 'mdi-material-ui/Github'
-import Twitter from 'mdi-material-ui/Twitter'
-import Facebook from 'mdi-material-ui/Facebook'
-import EyeOutline from 'mdi-material-ui/EyeOutline'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
+import EyeOutline from 'mdi-material-ui/EyeOutline'
+import Facebook from 'mdi-material-ui/Facebook'
+import Github from 'mdi-material-ui/Github'
+import Google from 'mdi-material-ui/Google'
+import Twitter from 'mdi-material-ui/Twitter'
 
 // ** Configs
 import themeConfig from 'src/configs/themeConfig'
@@ -200,7 +200,7 @@ const LoginPage = () => {
               size='large'
               variant='contained'
               sx={{ marginBottom: 7 }}
-              onClick={() => router.push('/')}
+              onClick={() => router.push('/pages/home')}
             >
               Login
             </Button>
