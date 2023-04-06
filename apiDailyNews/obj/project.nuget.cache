@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "U9ElatbY7UCAcVnG3q7lZd48jWDCLXZr28gsTJOxYnN946UVCzbu0p/oGB2x1N3zS9yJT2HTJVMMgXWE/gx2fg==",
+  "dgSpecHash": "zMtdTs4EBKXSdmbfPmsdleME84NWUQSEjGhr+1kL3EpPB+gXoHIaQ0AmqjjYt2ZwyIGEyUbOc6P7IMIWxD1CUQ==",
   "success": true,
-  "projectFilePath": "C:\\src\\Daily-News\\apiDailyNews\\apiDailyNews.csproj",
+  "projectFilePath": "C:\\src\\Daily-News\\apiDailynews\\apiDailyNews.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\antho\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\antho\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
