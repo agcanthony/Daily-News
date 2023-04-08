@@ -1,14 +1,9 @@
 // ** Icon imports
 import AccountCogOutline from 'mdi-material-ui/AccountCogOutline'
-import AccountPlusOutline from 'mdi-material-ui/AccountPlusOutline'
-import AlertCircleOutline from 'mdi-material-ui/AlertCircleOutline'
-import CreditCardOutline from 'mdi-material-ui/CreditCardOutline'
 import CubeOutline from 'mdi-material-ui/CubeOutline'
 import FormatLetterCase from 'mdi-material-ui/FormatLetterCase'
-import GoogleCirclesExtended from 'mdi-material-ui/GoogleCirclesExtended'
 import HomeOutline from 'mdi-material-ui/HomeOutline'
-import Login from 'mdi-material-ui/Login'
-import Table from 'mdi-material-ui/Table'
+import ArrowDownCircle from 'mdi-material-ui/light/ArrowDownCircle'
 
 const navigation = () => {
   return [
@@ -17,63 +12,68 @@ const navigation = () => {
       icon: HomeOutline,
       path: '/pages/home/'
     },
+
+    // {
+    //   sectionTitle: 'Pages'
+    // },
+    // {
+    //   title: 'Login',
+    //   icon: Login,
+    //   path: '/pages/login',
+    //   openInNewTab: true
+    // },
+    // {
+    //   title: 'Register',
+    //   icon: AccountPlusOutline,
+    //   path: '/pages/register',
+    //   openInNewTab: true
+    // },
+    // {
+    //   title: 'Error',
+    //   icon: AlertCircleOutline,
+    //   path: '/pages/error',
+    //   openInNewTab: true
+    // },
     {
-      title: 'Account Settings',
+      sectionTitle: 'Artigos'
+    },
+    {
+      title: 'Criar Artigo',
+      icon: FormatLetterCase,
+      path: '/typography'
+    },
+
+    // {
+    //   title: 'Icons',
+    //   path: '/icons',
+    //   icon: GoogleCirclesExtended
+    // },
+    // {
+    //   title: 'Cards',
+    //   icon: CreditCardOutline,
+    //   path: '/cards'
+    // },
+    // {
+    //   title: 'Tables',
+    //   icon: Table,
+    //   path: '/tables'
+    // },
+    {
+      sectionTitle: 'Config'
+    },
+    {
+      title: 'Cadastro Autores',
       icon: AccountCogOutline,
       path: '/account-settings'
     },
     {
-      sectionTitle: 'Pages'
-    },
-    {
-      title: 'Login',
-      icon: Login,
-      path: '/pages/login',
-      openInNewTab: true
-    },
-    {
-      title: 'Register',
-      icon: AccountPlusOutline,
-      path: '/pages/register',
-      openInNewTab: true
-    },
-    {
-      title: 'Error',
-      icon: AlertCircleOutline,
-      path: '/pages/error',
-      openInNewTab: true
-    },
-    {
-      sectionTitle: 'User Interface'
-    },
-    {
-      title: 'Typography',
-      icon: FormatLetterCase,
-      path: '/typography'
-    },
-    {
-      title: 'Icons',
-      path: '/icons',
-      icon: GoogleCirclesExtended
-    },
-    {
-      title: 'Cards',
-      icon: CreditCardOutline,
-      path: '/cards'
-    },
-    {
-      title: 'Tables',
-      icon: Table,
-      path: '/tables'
-    },
-    {
       icon: CubeOutline,
-      title: 'Form Layouts',
+      title: 'Usuarios',
       path: '/form-layouts'
     },
     {
       title: 'Ir para Blog',
-      icon: HomeOutline,
+      icon: ArrowDownCircle,
       path: '/'
     }
   ]

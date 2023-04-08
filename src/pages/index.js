@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+
 /* eslint-disable react/jsx-no-undef */
 'use client'
 
@@ -6,6 +8,7 @@ import Button from '@mui/material/Button';
 import Link from 'next/link';
 import { createContext } from "react";
 import { Container, Navbar } from "react-bootstrap";
+import Image from 'react-bootstrap/Image';
 
 // ** Layout Import
 import BlankLayout from 'src/@core/layouts/BlankLayout';
@@ -21,42 +24,44 @@ export const MessageCallbackContext = createContext(null);
 
 
 
-  const handleMessageCallback = (msg) => {
-    if (msg.tipo !== 'nada') {
-      let icon = '';
-      if (msg.tipo === 'sucesso')
-        icon = 'success';
-      else if (msg.tipo === 'erro')
-        icon = 'error';
+const handleMessageCallback = (msg) => {
+  if (msg.tipo !== 'nada') {
+    let icon = '';
+    if (msg.tipo === 'sucesso')
+      icon = 'success';
+    else if (msg.tipo === 'erro')
+      icon = 'error';
 
-      MySwal.fire({
-        position: 'center',
-        icon: icon,
-        title: msg.texto,
-        showConfirmButton: false,
-        timer: 4000,
-        toast: true
-      })
-    }
+    MySwal.fire({
+      position: 'center',
+      icon: icon,
+      title: msg.texto,
+      showConfirmButton: false,
+      timer: 4000,
+      toast: true
+    })
   }
+}
 
 const Home = () => {
   return (
     <>
       <Navbar className="navbar-Principal" variant="dark" expand="lg">
-        <Container className='nav-container'>
-          <Navbar.Brand href="#home" className='titulo'>Daily News</Navbar.Brand>
+        <Container className='nav-container '>
+          <Navbar.Brand href="#home" className='titulo'>
+            <Image src="/images/LOGO.png" width={64} height={64} />
+          </Navbar.Brand>
           {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
-          <Navbar.Collapse id="basic-navbar-nav" >            
+          <Navbar.Collapse className='botaoLogin' id="basic-navbar-nav">
             <Link passHref href='/pages/login'>
-                <Button component='a' variant='contained' sx={{ px: 5.5 }}>
-                  Login
-                </Button>
-            </Link>            
+              <Button component='a' variant='contained' sx={{ px: 5.5 }}>
+                Login
+              </Button>
+            </Link>
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      
+
       <section className='top'>
         <div className='max-width'>
           <div className='top-content'>
@@ -69,7 +74,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <CardBasic/>
+      <CardBasic />
       <br />
       <Navbar fixed="bottom" expand="lg" variant="light" bg="light">
         <Container>

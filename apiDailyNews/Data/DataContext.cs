@@ -13,4 +13,6 @@ public class DataContext : DbContext
     public DbSet<UsuarioTipoLogin> UsuarioTipoLogin { get; set; } = null!;
     public DbSet<Curtidas> Curtidas { get; set; } = null!;
     public DbSet<TipoLogin> TipoLogin { get; set; } = null!;
+
+    
 }

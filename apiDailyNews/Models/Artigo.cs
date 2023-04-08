@@ -24,4 +24,6 @@ public class Artigo
 
     [Required(ErrorMessage = "É obrigatório informar um autor.")]
     public int idUsuario { get; set; }
+
+    // public Usuario? Usuario { get; set; }
 }

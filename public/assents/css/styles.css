@@ -25,6 +25,14 @@ section{
     text-transform: uppercase;
     margin-top: 0;
     margin-bottom: 0;
+    margin-left: 50px;
+}
+
+.botaoLogin
+{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 50px;
 }
 
 .nav-container{
