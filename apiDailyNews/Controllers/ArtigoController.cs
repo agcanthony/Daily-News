@@ -21,9 +21,9 @@ public class ArtigoController : ControllerBase
             await context.SaveChangesAsync();
             return Ok("Artigo salvo com sucesso");
         }
-        catch
+        catch(Exception ex)
         {
-            return BadRequest("Falha ao inserir o artigo");
+            return BadRequest(ex.Message);
         }
     }
 

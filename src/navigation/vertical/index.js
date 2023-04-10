@@ -40,7 +40,7 @@ const navigation = () => {
     {
       title: 'Criar Artigo',
       icon: FormatLetterCase,
-      path: '/typography'
+      path: '/artigo'
     },
 
     // {

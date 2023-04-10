@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\src\\Daily-News\\apidailyNews\\apiDailyNews.csproj": {}
+    "C:\\src\\Daily-News\\apiDailyNews\\apiDailyNews.csproj": {}
   },
   "projects": {
-    "C:\\src\\Daily-News\\apidailyNews\\apiDailyNews.csproj": {
+    "C:\\src\\Daily-News\\apiDailyNews\\apiDailyNews.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\src\\Daily-News\\apidailyNews\\apiDailyNews.csproj",
+        "projectUniqueName": "C:\\src\\Daily-News\\apiDailyNews\\apiDailyNews.csproj",
         "projectName": "apiDailyNews",
-        "projectPath": "C:\\src\\Daily-News\\apidailyNews\\apiDailyNews.csproj",
+        "projectPath": "C:\\src\\Daily-News\\apiDailyNews\\apiDailyNews.csproj",
         "packagesPath": "C:\\Users\\antho\\.nuget\\packages\\",
-        "outputPath": "C:\\src\\Daily-News\\apidailyNews\\obj\\",
+        "outputPath": "C:\\src\\Daily-News\\apiDailyNews\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\antho\\AppData\\Roaming\\NuGet\\NuGet.Config"

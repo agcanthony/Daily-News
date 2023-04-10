@@ -2,8 +2,7 @@
 import Grid from '@mui/material/Grid'
 
 // ** Demo Components Imports
-import TypographyTexts from 'src/views/typography/TypographyTexts'
-import TypographyHeadings from 'src/views/typography/TypographyHeadings'
+import TypographyHeadings from 'src/views/artigo/ArtigoBlog'
 
 const TypographyPage = () => {
   return (
@@ -11,9 +10,9 @@ const TypographyPage = () => {
       <Grid item xs={12}>
         <TypographyHeadings />
       </Grid>
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <TypographyTexts />
-      </Grid>
+      </Grid> */}
     </Grid>
   )
 }

@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 public class Artigo
 {
-    [Required]
+    // [Required]
     public int Id { get; set; }
     [Required(ErrorMessage = "O texto é obrigatório")]
     public string Texto { get; set; } = null!;
@@ -15,15 +15,15 @@ public class Artigo
     public string SubTitulo { get; set; } = null!;
 
     public bool publicado { get; set; } = false;
-    [Required]
+    // [Required]
     public DateTime DataCadastro { get; set; }
-    [Required]
+    // [Required]
     public DateTime DataPublicacao { get; set; }
-    [Required]
+    // [Required]
     public DateTime DataUltimaAlteracao { get; set; }
 
-    [Required(ErrorMessage = "É obrigatório informar um autor.")]
-    public int idUsuario { get; set; }
+    // [Required(ErrorMessage = "É obrigatório informar um autor.")]
+    public int idUsuario { get; set; } = 1;
 
     // public Usuario? Usuario { get; set; }
 }
