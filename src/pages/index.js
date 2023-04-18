@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable jsx-a11y/alt-text */
 
 /* eslint-disable react/jsx-no-undef */
@@ -83,7 +84,7 @@ const Home = () => {
           <h2>"Leia nossos artigos ou crie o seu próprio: junte-se à comunidade do nosso blog!"</h2>
           <p>Não precisa ser um expert no assunto, basta ter vontade de aprender e compartilhar. Eu estou aqui para te ajudar no que precisar e garantir que o seu artigo seja de qualidade e relevante.</p>
           <p>Então, o que você está esperando? Vamos juntos fazer desse espaço um lugar ainda mais incrível e cheio de conteúdo de valor. Leia, comente, crie, compartilhe. A sua participação é muito importante para nós!</p>
-          <a href="#" className="btn">Junte-se agora</a>
+          <a href="/pages/login" className="btn">Junte-se agora</a>
           <div className="testimonial">
             <p>"Adoro ler os artigos deste blog e sempre aprendo algo novo. Recomendo a todos que se juntem à comunidade!"</p>
             <p>- Maria, leitora do blog</p>
