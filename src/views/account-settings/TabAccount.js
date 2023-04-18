@@ -2,24 +2,28 @@
 import { useState } from 'react'
 
 // ** MUI Imports
-import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
-import Link from '@mui/material/Link'
 import Alert from '@mui/material/Alert'
-import Select from '@mui/material/Select'
-import { styled } from '@mui/material/styles'
-import MenuItem from '@mui/material/MenuItem'
-import TextField from '@mui/material/TextField'
-import Typography from '@mui/material/Typography'
-import InputLabel from '@mui/material/InputLabel'
 import AlertTitle from '@mui/material/AlertTitle'
-import IconButton from '@mui/material/IconButton'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import CardContent from '@mui/material/CardContent'
 import FormControl from '@mui/material/FormControl'
-import Button from '@mui/material/Button'
+import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton'
+import InputAdornment from '@mui/material/InputAdornment'
+import InputLabel from '@mui/material/InputLabel'
+import Link from '@mui/material/Link'
+import MenuItem from '@mui/material/MenuItem'
+import OutlinedInput from '@mui/material/OutlinedInput'
+import Select from '@mui/material/Select'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import { styled } from '@mui/material/styles'
 
 // ** Icons Imports
 import Close from 'mdi-material-ui/Close'
+import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
+import EyeOutline from 'mdi-material-ui/EyeOutline'
 
 const ImgStyled = styled('img')(({ theme }) => ({
   width: 120,
@@ -46,6 +50,16 @@ const ResetButtonStyled = styled(Button)(({ theme }) => ({
 }))
 
 const TabAccount = () => {
+  // ** States
+  const [values, setValues] = useState({
+    newPassword: '',
+    currentPassword: '',
+    showNewPassword: false,
+    confirmNewPassword: '',
+    showCurrentPassword: false,
+    showConfirmNewPassword: false
+  })
+
   // ** State
   const [openAlert, setOpenAlert] = useState(true)
   const [imgSrc, setImgSrc] = useState('/images/avatars/1.png')
@@ -59,6 +73,20 @@ const TabAccount = () => {
     }
   }
 
+  // Handle New Password
+  const handleNewPasswordChange = prop => event => {
+    setValues({ ...values, [prop]: event.target.value })
+  }
+
+  const handleClickShowNewPassword = () => {
+    setValues({ ...values, showNewPassword: !values.showNewPassword })
+  }
+
+  const handleMouseDownNewPassword = event => {
+    event.preventDefault()
+  }
+
+
   return (
     <CardContent>
       <form>
@@ -68,7 +96,7 @@ const TabAccount = () => {
               <ImgStyled src={imgSrc} alt='Profile Pic' />
               <Box>
                 <ButtonStyled component='label' variant='contained' htmlFor='account-settings-upload-image'>
-                  Upload New Photo
+                  Upload Foto
                   <input
                     hidden
                     type='file'
@@ -81,17 +109,17 @@ const TabAccount = () => {
                   Reset
                 </ResetButtonStyled>
                 <Typography variant='body2' sx={{ marginTop: 5 }}>
-                  Allowed PNG or JPEG. Max size of 800K.
+                  PNG ou JPEG permitido.
                 </Typography>
               </Box>
             </Box>
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Username' placeholder='johnDoe' defaultValue='johnDoe' />
+            <TextField fullWidth label='Nome' placeholder='johnDoe' defaultValue='johnDoe' />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Name' placeholder='John Doe' defaultValue='John Doe' />
+            <TextField fullWidth label='Sobrenome' placeholder='John Doe' defaultValue='John Doe' />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -104,13 +132,10 @@ const TabAccount = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <FormControl fullWidth>
-              <InputLabel>Role</InputLabel>
+              <InputLabel>Tipo</InputLabel>
               <Select label='Role' defaultValue='admin'>
                 <MenuItem value='admin'>Admin</MenuItem>
-                <MenuItem value='author'>Author</MenuItem>
-                <MenuItem value='editor'>Editor</MenuItem>
-                <MenuItem value='maintainer'>Maintainer</MenuItem>
-                <MenuItem value='subscriber'>Subscriber</MenuItem>
+                <MenuItem value='author'>Autor</MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -118,14 +143,34 @@ const TabAccount = () => {
             <FormControl fullWidth>
               <InputLabel>Status</InputLabel>
               <Select label='Status' defaultValue='active'>
-                <MenuItem value='active'>Active</MenuItem>
-                <MenuItem value='inactive'>Inactive</MenuItem>
-                <MenuItem value='pending'>Pending</MenuItem>
+                <MenuItem value='active'>Ativo</MenuItem>
+                <MenuItem value='inactive'>Inativo</MenuItem>
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Company' placeholder='ABC Pvt. Ltd.' defaultValue='ABC Pvt. Ltd.' />
+          <Grid item xs={6} sm={{ marginTop: 6 }}>
+            <FormControl fullWidth>
+              <InputLabel htmlFor='account-settings-new-password'>New Password</InputLabel>
+              <OutlinedInput
+                label='Insira a senha!'
+                value={values.newPassword}
+                id='account-settings-new-password'
+                onChange={handleNewPasswordChange('newPassword')}
+                type={values.showNewPassword ? 'text' : 'password'}
+                endAdornment={
+                  <InputAdornment position='end'>
+                    <IconButton
+                      edge='end'
+                      onClick={handleClickShowNewPassword}
+                      aria-label='toggle password visibility'
+                      onMouseDown={handleMouseDownNewPassword}
+                    >
+                      {values.showNewPassword ? <EyeOutline /> : <EyeOffOutline />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
           </Grid>
 
           {openAlert ? (
@@ -139,7 +184,7 @@ const TabAccount = () => {
                   </IconButton>
                 }
               >
-                <AlertTitle>Your email is not confirmed. Please check your inbox.</AlertTitle>
+                <AlertTitle>Seu e-mail não está confirmado. Verifique sua caixa de entrada.</AlertTitle>
                 <Link href='/' onClick={e => e.preventDefault()}>
                   Resend Confirmation
                 </Link>
@@ -149,10 +194,10 @@ const TabAccount = () => {
 
           <Grid item xs={12}>
             <Button variant='contained' sx={{ marginRight: 3.5 }}>
-              Save Changes
+              Salvar
             </Button>
             <Button type='reset' variant='outlined' color='secondary'>
-              Reset
+              Cancelar
             </Button>
           </Grid>
         </Grid>

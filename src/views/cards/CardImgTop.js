@@ -4,21 +4,29 @@ import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 
-const CardImgTop = () => {
+const CardImgTop = ({ artigo }) => {
+  const truncate = (input) =>
+      input?.length > 30 ? `${input.substring(0, 30)}...` : input;
+  
+  
   return (
     <Card>
-      <CardMedia sx={{ height: '14.5625rem' }} image='/images/cards/glass-house.png' />
+      <CardMedia sx={{ height: '14.5625rem' }} image={artigo.urlImagem} />
       <CardContent>
-        <Typography variant='h6' sx={{ marginBottom: 2 }}>
-          Influencing The Influencer
+        <Typography variant='h5' sx={{ marginBottom: 2 }}>
+          {artigo.titulo}
         </Typography>
         <Typography variant='body2'>
-          Cancun is back, better than ever! Over a hundred Mexico resorts have reopened and the state tourism minister
-          predicts Cancun will draw as many visitors in 2006 as it did two years ago.
+          {truncate(artigo.texto)}
         </Typography>
+        <Typography variant='h6' sx={{ marginBottom: 2 }}>          
+          {artigo.usuario.nome}
+        </Typography>
+
       </CardContent>
     </Card>
   )
 }
 
 export default CardImgTop
+

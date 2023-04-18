@@ -32,7 +32,9 @@ export const schema = yup.object({
     .required('O subtítulo é obrigatória'),
   Texto: yup.string()
     .min(50, 'O artigo deve conter, no mínimo, 50 caracteres')
-    .required('O artigo é obrigatória')
+    .required('O artigo é obrigatória'),
+  UrlImg: yup.string()
+  .min(5, 'O URL da Imagem deve conter, no mínimo, 5 caracteres')
 }).required();
 
 const ArtigoBlog = () => {
@@ -60,7 +62,7 @@ const ArtigoBlog = () => {
         if (result.status == 200) {
           //ações em caso de sucesso
           // messageCallback({ tipo: 'sucesso', texto: resultData });
-          handleClose();
+          // console.log(resultData);
         }
         else {
           //ações em caso de erro
@@ -131,10 +133,23 @@ const ArtigoBlog = () => {
                 rows={12}
               />
               <span className='text-danger'>{errors.Texto?.message}</span>
-              <Typography variant='body2'>escreva um artigo</Typography>
+              <Typography variant='body2'>Escreva um artigo</Typography>
+            </DemoGrid>
+            <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
+              <Typography>Imagem URL</Typography>
+            </Grid>
+            <DemoGrid item xs={12} sm={10}>
+              <TextField
+                className="form-control"
+                {...register("UrlImg")}
+                fullWidth
+                label="Imagem URL"
+                id="fullWidth" />
+              <span className='text-danger'>{errors.UrlImg?.message}</span>
+              <Typography variant='body2'>Insira um Url de Imagem</Typography>
             </DemoGrid>
           </Grid>
-          <BusyButton 
+          <BusyButton
             type="submit"
             label="Salvar"
             busy={busy}

@@ -16,7 +16,7 @@ namespace apiDailyNews.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.4")
+                .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -29,13 +29,13 @@ namespace apiDailyNews.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("DataCadastro")
+                    b.Property<DateTime?>("DataCadastro")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DataPublicacao")
+                    b.Property<DateTime?>("DataPublicacao")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DataUltimaAlteracao")
+                    b.Property<DateTime?>("DataUltimaAlteracao")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("SubTitulo")
@@ -52,13 +52,19 @@ namespace apiDailyNews.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("idUsuario")
+                    b.Property<string>("UrlImagem")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UsuarioID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<bool>("publicado")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UsuarioID");
 
                     b.ToTable("Artigo");
                 });
@@ -71,7 +77,11 @@ namespace apiDailyNews.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("Data")
+                    b.Property<int>("ArtigoID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("Data")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Texto")
@@ -79,29 +89,37 @@ namespace apiDailyNews.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<int>("idArtigo")
+                    b.Property<int>("UsuarioID")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ArtigoID");
+
+                    b.HasIndex("UsuarioID");
 
                     b.ToTable("Comentarios");
                 });
 
             modelBuilder.Entity("Curtidas", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("idArtigo")
+                    b.Property<int>("ArtigoID")
                         .HasColumnType("int");
 
-                    b.Property<int>("idUsuario")
+                    b.Property<int>("UsuarioID")
                         .HasColumnType("int");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArtigoID");
+
+                    b.HasIndex("UsuarioID");
 
                     b.ToTable("Curtidas");
                 });
@@ -114,7 +132,7 @@ namespace apiDailyNews.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("idUsuario")
+                    b.Property<int>("UsuarioID")
                         .HasColumnType("int");
 
                     b.Property<string>("senha")
@@ -122,6 +140,8 @@ namespace apiDailyNews.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UsuarioID");
 
                     b.ToTable("GerenciadorSenhas");
                 });
@@ -141,6 +161,23 @@ namespace apiDailyNews.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TipoLogin");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Descricao = "Administrador"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Descricao = "Autor"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Descricao = "Leitor"
+                        });
                 });
 
             modelBuilder.Entity("Usuario", b =>
@@ -155,13 +192,11 @@ namespace apiDailyNews.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Bloquear")
-                        .HasColumnType("bit");
+                    b.Property<string>("CodigoConfirmacao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Confirmacao")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("DataNascimento")
+                    b.Property<DateTime?>("DataNascimento")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -178,28 +213,96 @@ namespace apiDailyNews.Migrations
                         .HasMaxLength(8)
                         .HasColumnType("nvarchar(8)");
 
+                    b.Property<int?>("TipoLoginID")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("ativo")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Usuario");
+                    b.HasIndex("TipoLoginID");
+
+                    b.ToTable("TbUsuario");
                 });
 
-            modelBuilder.Entity("UsuarioTipoLogin", b =>
+            modelBuilder.Entity("Artigo", b =>
                 {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.HasOne("Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    b.Navigation("Usuario");
+                });
 
-                    b.Property<int>("idTipoLogin")
-                        .HasColumnType("int");
+            modelBuilder.Entity("Comentarios", b =>
+                {
+                    b.HasOne("Artigo", "Artigo")
+                        .WithMany("Comentarios")
+                        .HasForeignKey("ArtigoID")
+                        .IsRequired();
 
-                    b.Property<int>("idUsuario")
-                        .HasColumnType("int");
+                    b.HasOne("Usuario", "Usuario")
+                        .WithMany("Comentarios")
+                        .HasForeignKey("UsuarioID")
+                        .IsRequired();
 
-                    b.HasKey("id");
+                    b.Navigation("Artigo");
 
-                    b.ToTable("UsuarioTipoLogin");
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("Curtidas", b =>
+                {
+                    b.HasOne("Artigo", "Artigo")
+                        .WithMany("Curtidas")
+                        .HasForeignKey("ArtigoID")
+                        .IsRequired();
+
+                    b.HasOne("Usuario", "Usuario")
+                        .WithMany("Curtidas")
+                        .HasForeignKey("UsuarioID")
+                        .IsRequired();
+
+                    b.Navigation("Artigo");
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("GerenciadorSenhas", b =>
+                {
+                    b.HasOne("Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("Usuario", b =>
+                {
+                    b.HasOne("TipoLogin", "TipoLogin")
+                        .WithMany()
+                        .HasForeignKey("TipoLoginID");
+
+                    b.Navigation("TipoLogin");
+                });
+
+            modelBuilder.Entity("Artigo", b =>
+                {
+                    b.Navigation("Comentarios");
+
+                    b.Navigation("Curtidas");
+                });
+
+            modelBuilder.Entity("Usuario", b =>
+                {
+                    b.Navigation("Comentarios");
+
+                    b.Navigation("Curtidas");
                 });
 #pragma warning restore 612, 618
         }

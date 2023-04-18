@@ -16,13 +16,19 @@ public class ComentariosController : ControllerBase
     {
         try
         {
+
+            if(model == null)
+                return BadRequest();
+
+            model.Data = DateTime.Now;
+
             context.Comentarios.Add(model);
             await context.SaveChangesAsync();
-            return Ok("Comentarios salvo com sucesso");
+            return Ok("Comentários cadastrado com sucesso");
         }
         catch
         {
-            return BadRequest("Falha ao inserir o Comentário");
+            return BadRequest("Falha ao cadastrar o Comentário");
         }
     }
 
@@ -35,7 +41,7 @@ public class ComentariosController : ControllerBase
         }
         catch
         {
-            return BadRequest("Erro ao obter os Comentários");
+            return BadRequest("Erro ao consultar os Comentários");
         }
     }
 
@@ -56,7 +62,7 @@ public class ComentariosController : ControllerBase
         }
         catch
         {
-            return BadRequest();
+            return BadRequest("Falha ao alterar o comentário");
         }
     }
 
@@ -65,18 +71,18 @@ public class ComentariosController : ControllerBase
     {
         try
         {
-            Comentarios model = await context.Comentarios.FindAsync(id);
+            Comentarios? model = await context.Comentarios.FindAsync(id);
 
             if (model == null)
                 return NotFound();
 
             context.Comentarios.Remove(model);
             await context.SaveChangesAsync();
-            return Ok("Comentário removido com sucesso");
+            return Ok("Comentário excluído com sucesso");
         }
         catch
         {
-            return BadRequest("Falha ao remover o comentário");
+            return BadRequest("Falha ao excluir o comentário");
         }
     }
 }

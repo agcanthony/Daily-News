@@ -1,5 +1,6 @@
 /* eslint-disable padding-line-between-statements */
 /* eslint-disable newline-before-return */
+import { Button } from '@mui/material';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Chip from '@mui/material/Chip';
@@ -33,20 +34,9 @@ const DashboardTable = () => {
   useEffect(() => {
     fetch('/api/artigo')
       .then(response => response.json())
-      .then(data => setRows(data))
-      .catch(error => console.log(error));
-  }, []);
-
-  useEffect(() => {
-    fetch('/api/usuario')
-      .then(response => response.json())
       .then(data => {
-        setUsers(data);
-        setUserMap(data.reduce((map, user) => {
-          map[user.id] = user.nome;
-          return map;
-        }, {}));
-      })
+        console.log(data)
+        setRows(data)})      
       .catch(error => console.log(error));
   }, []);
 
@@ -60,8 +50,9 @@ const DashboardTable = () => {
               <TableCell>Autor</TableCell>
               <TableCell>Artigo</TableCell>
               <TableCell>subTitulo</TableCell>
-              <TableCell>Ver</TableCell>
-              <TableCell>status</TableCell>              
+              <TableCell>Status</TableCell>
+              <TableCell>Ver</TableCell> 
+              <TableCell>Remover</TableCell>             
             </TableRow>
           </TableHead>
           <TableBody>
@@ -72,12 +63,10 @@ const DashboardTable = () => {
                     <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>{row.id}</Typography>
                   </Box>
                 </TableCell>
-                <TableCell>
-                  {userMap[row.idUsuario] || 'Carregando...'}
-                </TableCell>
+                <TableCell>{row.usuario.nome}</TableCell>
                 <TableCell>{row.titulo}</TableCell>
                 <TableCell>{row.subTitulo}</TableCell>
-                <TableCell>{row.subTitulo}</TableCell>
+                
                 <TableCell>
                 <Chip
                     label={row.publicado ? 'Publicado' : 'Não Publicado'}
@@ -90,7 +79,9 @@ const DashboardTable = () => {
                     }}
                   />
                 </TableCell>
-                
+                <TableCell>
+                  <Button>X</Button>
+                </TableCell>                
               </TableRow>
             ))}
           </TableBody>

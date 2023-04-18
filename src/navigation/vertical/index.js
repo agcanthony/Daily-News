@@ -12,28 +12,6 @@ const navigation = () => {
       icon: HomeOutline,
       path: '/pages/home/'
     },
-
-    // {
-    //   sectionTitle: 'Pages'
-    // },
-    // {
-    //   title: 'Login',
-    //   icon: Login,
-    //   path: '/pages/login',
-    //   openInNewTab: true
-    // },
-    // {
-    //   title: 'Register',
-    //   icon: AccountPlusOutline,
-    //   path: '/pages/register',
-    //   openInNewTab: true
-    // },
-    // {
-    //   title: 'Error',
-    //   icon: AlertCircleOutline,
-    //   path: '/pages/error',
-    //   openInNewTab: true
-    // },
     {
       sectionTitle: 'Artigos'
     },
@@ -42,22 +20,6 @@ const navigation = () => {
       icon: FormatLetterCase,
       path: '/artigo'
     },
-
-    // {
-    //   title: 'Icons',
-    //   path: '/icons',
-    //   icon: GoogleCirclesExtended
-    // },
-    // {
-    //   title: 'Cards',
-    //   icon: CreditCardOutline,
-    //   path: '/cards'
-    // },
-    // {
-    //   title: 'Tables',
-    //   icon: Table,
-    //   path: '/tables'
-    // },
     {
       sectionTitle: 'Config'
     },
@@ -69,7 +31,7 @@ const navigation = () => {
     {
       icon: CubeOutline,
       title: 'Usuarios',
-      path: '/form-layouts'
+      path: '/user-layouts'
     },
     {
       title: 'Ir para Blog',
