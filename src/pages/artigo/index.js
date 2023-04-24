@@ -10,9 +10,6 @@ const TypographyPage = () => {
       <Grid item xs={12}>
         <ArtigoBlog />
       </Grid>
-      {/* <Grid item xs={12}>
-        <TypographyTexts />
-      </Grid> */}
     </Grid>
   )
 }

@@ -45,6 +45,19 @@ public class ArtigoController : ControllerBase
         }
     }
 
+    [HttpGet("{id}")]
+    public async Task<ActionResult<IEnumerable<Artigo>>> Get([FromRoute] int? id)
+    {
+        try
+        {
+            return Ok(await context.Artigo.Include(p=> p.Usuario).Where(p=> p.Id == id).ToListAsync());
+        }
+       catch(Exception ex)
+        {
+            return BadRequest("Erro ao consultar os artigos "+ ex.Message);
+        }
+    }
+
     [HttpPut("{id}")]
     public async Task<ActionResult> Put([FromRoute] int id, [FromBody] Artigo model)
     {

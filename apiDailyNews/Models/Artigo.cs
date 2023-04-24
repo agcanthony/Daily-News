@@ -15,7 +15,7 @@ public class Artigo
     [MaxLength(100, ErrorMessage = "O Sub-título pode conter, no máximo, 100 caracteres")]
     public string SubTitulo { get; set; } = null!;
 
-    public bool publicado { get; set; } = false;
+    public bool? publicado { get; set; }
 
     public DateTime? DataCadastro { get; set; }
 
@@ -26,7 +26,7 @@ public class Artigo
     [Required(ErrorMessage = "É obrigatório informar um autor.")]
     public int? UsuarioID { get; set; }
 
-    public string? UrlImagem { get; set; }
+    public string? UrlImg { get; set; }
 
    
     [ForeignKey(nameof(UsuarioID))]

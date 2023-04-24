@@ -116,26 +116,25 @@ const TabAccount = () => {
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Nome' placeholder='johnDoe' defaultValue='johnDoe' />
+            <TextField fullWidth label='Nome' placeholder='johnDoe' />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Sobrenome' placeholder='John Doe' defaultValue='John Doe' />
+            <TextField fullWidth label='Sobrenome' placeholder='John Doe' />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
               type='email'
               label='Email'
-              placeholder='johnDoe@example.com'
-              defaultValue='johnDoe@example.com'
+              placeholder='johnDoe@example.com'              
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <FormControl fullWidth>
               <InputLabel>Tipo</InputLabel>
               <Select label='Role' defaultValue='admin'>
-                <MenuItem value='admin'>Admin</MenuItem>
-                <MenuItem value='author'>Autor</MenuItem>
+                <MenuItem value='1'>Admin</MenuItem>
+                <MenuItem value='2'>Autor</MenuItem>
               </Select>
             </FormControl>
           </Grid>

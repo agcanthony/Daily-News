@@ -99,7 +99,7 @@ public class UsuarioController : ControllerBase
         {
             if (await context.Usuario.AnyAsync(p => p.Email == model.Email))
                 return BadRequest("Já existe usuário com o e-mail informado");
-
+            
             model.Senha = ObterSenha(model);
             context.Usuario.Add(model);
             await context.SaveChangesAsync();
@@ -112,11 +112,12 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult<IEnumerable<Usuario>>> Get()
     {
         try
         {
-            return Ok(await context.Usuario.ToListAsync());
+            return Ok(await context.Usuario.Include(p=> p.TipoLogin).ToListAsync());
         }
         catch
         {

@@ -18,15 +18,32 @@ const useStyles = makeStyles({
   },
 });
 
+const adicionarCurtidas = async (artigos) => {
+  const artigosComCurtidas = [];
+  for (const artigo of artigos) {
+    const response = await fetch(`/api/curtidas/${artigo.id}`);
+    const curtidas = await response.json();
+    artigosComCurtidas.push({ ...artigo, curtidas: curtidas.length });
+  }
+  return artigosComCurtidas;
+};
+
 const CardBasic = () => {
   const [rows, setRows] = useState([]);
   const classes = useStyles();
   
   useEffect(() => {
-    fetch('/api/artigo')
-      .then(response => response.json())
-      .then(data => setRows(data.filter(artigo => artigo.publicado)))
-      .catch(error => console.log(error));
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/artigo');
+        const data = await response.json();
+        const dataComCurtidas = await adicionarCurtidas(data.filter(artigo => artigo.publicado));
+        setRows(dataComCurtidas);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
   }, []);
 
   return (
@@ -37,7 +54,7 @@ const CardBasic = () => {
         </Grid>
         {rows.map(row => (
           <Grid item xs={12} sm={6} md={3}>
-            <CardImgTop artigo={row} />
+            <CardImgTop artigo={row} curtidas={row.curtidas}/>
           </Grid>
         ))}
       </Grid>

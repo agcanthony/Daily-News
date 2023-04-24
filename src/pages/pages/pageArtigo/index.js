@@ -1,52 +1,49 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/no-unknown-property */
 /* eslint-disable @next/next/no-html-link-for-pages */
-/* eslint-disable jsx-a11y/alt-text */
-
 /* eslint-disable react/jsx-no-undef */
-'use client'
-
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import { Card } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
 import Link from 'next/link';
-import { createContext } from "react";
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { Container, Navbar } from "react-bootstrap";
 import Image from 'react-bootstrap/Image';
-
+import CardComent from 'src/views/cards/CardComent';
 
 // ** Layout Import
 import BlankLayout from 'src/@core/layouts/BlankLayout';
-import CardBasic from './cards';
 
-// import Swal from 'sweetalert2';
-// import withReactContent from 'sweetalert2-react-content';
-// import '../../public/assents/css/styles.css';
+const bull = (
+  <Box
+    component="span"
+    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
+  >
+    •
+  </Box>
+);
 
+const PageArtigo = () => {
+  const router = useRouter();
+  const [artigo, setArtigo] = useState(null);
 
+  useEffect(() => {
+    // Recupera o id passado pela URL
+    const { id } = router.query;
 
-export const MessageCallbackContext = createContext(null);
+    // Faz a requisição para buscar o artigo correspondente
+    fetch(`/api/artigo/${id}`)
+      .then(response => response.json())
+      .then(data => setArtigo(data[0]))
+      .catch(error => console.log(error));
+  }, [router.query]);
 
+  // console.log(response)
 
-
-const handleMessageCallback = (msg) => {
-  if (msg.tipo !== 'nada') {
-    let icon = '';
-    if (msg.tipo === 'sucesso')
-      icon = 'success';
-    else if (msg.tipo === 'erro')
-      icon = 'error';
-
-    MySwal.fire({
-      position: 'center',
-      icon: icon,
-      title: msg.texto,
-      showConfirmButton: false,
-      timer: 4000,
-      toast: true
-    })
-  }
-}
-
-const Home = () => {
   return (
     <>
       <Navbar className="navbar-Principal" variant="dark" expand="lg">
@@ -77,12 +74,54 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      <div className='divCard'>
-        <CardBasic />
-      </div>
       <br />
-      <section className='divCard'>
+      <div className='divCard'>
+        {artigo ? (
+          <div className='divArtigo'>
+            <div className='imagemArtigo'>
+              <Image src={artigo.urlImg} width={'1080'} />
+            </div>
+            <br />
+            <Typography className='tituloArtigo' variant='h2'>{artigo.titulo}</Typography>
+            <br />
+            <Typography className='subTituloArtigo' variant='h4'>{artigo.subTitulo}</Typography>
+            <br />
+            <Typography className='corpoArtigo'>{artigo.texto}</Typography>
+            <br />
+            <Typography className='autorArtigo' variant='h6'>Autor {artigo.usuario.nome}</Typography>
+            <br />
+          </div>
+        ) : (
+          <div>Carregando...</div>
+        )}
+
+        <br />
+
+        <div className='curtidas'>         
+          <Link passHref href='/pages/login'>
+            <Button component='a' sx={{ height: 2, width: 3 }}>
+              <ThumbUpIcon sx={{ marginRight: 1, width: '150px' }} />              
+            </Button>            
+          </Link>
+          <p>Curtiu!</p>
+        </div>
+      </div>
+      <section className='divCard' >
+        <hr />
+        <Card className='curtidas' sx={{ minWidth: 275 }}>
+          <CardContent>
+            <Typography variant="h5" component="div">
+              Co{bull}men{bull}tá{bull}ri{bull}os
+            </Typography>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent>
+            <CardComent />
+          </CardContent>
+        </Card>
+      </section>
+      <section className='divCard' >
         <div className="blog-message">
           <h2>"Leia nossos artigos ou crie o seu próprio: junte-se à comunidade do nosso blog!"</h2>
           <p>Não precisa ser um expert no assunto, basta ter vontade de aprender e compartilhar. Eu estou aqui para te ajudar no que precisar e garantir que o seu artigo seja de qualidade e relevante.</p>
@@ -119,10 +158,9 @@ const Home = () => {
         </Navbar>
       </div>
     </>
-  )
+
+  );
 }
+PageArtigo.getLayout = page => <BlankLayout>{page}</BlankLayout>
 
-Home.getLayout = page => <BlankLayout>{page}</BlankLayout>
-
-export default Home
-
+export default PageArtigo;

@@ -65,7 +65,7 @@ h6{
   color: #ffffff;
   display: flex;
   /* background: url(""); */
-  height: 50vh;
+  height: 75vh;
   min-height: 500px;
   background-size: cover;
   background-attachment: fixed;
@@ -84,20 +84,20 @@ h6{
 
  /* Adicione uma imagem de fundo */
  .blog-message {
-  box-shadow: #000;
-  background-image: url('https://c1.wallpaperflare.com/preview/887/213/266/education-school-pencil-desktop.jpg');
+  box-shadow: #ffffff;
+  /* background-image: url('https://c1.wallpaperflare.com/preview/887/213/266/education-school-pencil-desktop.jpg'); */
   background-repeat: no-repeat;
   background-size: cover;
   padding: 50px;
   text-align: center;
-  color: #fff;
+  color: #000000;
 }
 
 /* Use uma fonte diferente para destacar o texto */
 h2, p {
   font-family: 'Arial', sans-serif;
   color: #000000;
-  box-shadow: #000;
+  box-shadow: #ececec;
 }
 
 /* Use negrito para destacar frases importantes */
@@ -109,7 +109,7 @@ h2 strong {
 .btn {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #000000;
+  background-color: #3f0252;
   color: #fff;
   text-decoration: none;
   border-radius: 5px;
@@ -132,4 +132,61 @@ h2 strong {
   display: flex; 
   align-Items: 'center'; 
   /* background-color: rgb(0 0 0 / 82%); */
+}
+
+.divArtigo {
+  justify-Content: center;
+  flex-Direction: column;
+  display: flex;
+  align-Items: 'center';  
+}
+
+.imagemArtigo
+{
+  justify-content: center;
+  display: flex;
+}
+
+.tituloArtigo
+{
+  justify-content: center;
+  display: flex;
+}
+
+.subTituloArtigo
+{
+  justify-content: center;
+  display: flex;
+}
+
+.corpoArtigo
+{
+  justify-content: center;
+  display: flex;
+  width: 60%;
+  font-size: 2rem !important;
+  font-weight: 500;
+  left: 20%;
+  position: relative;
+}
+
+.autorArtigo{
+  justify-content: center;
+  display: flex;
+  color: #000;
+}
+
+.curtidas {
+  justify-Content: center;
+  display: flex; 
+  height: 7rem;  
+  align-items: center;
+}
+
+.curtir{
+  color: #000;
+}
+
+.alerta{
+  color: #fff;
 }
