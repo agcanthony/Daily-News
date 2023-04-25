@@ -51,9 +51,11 @@ const ArtigoBlog = () => {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.API_KEY
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
+      cache: 'no-store'
     };
 
     fetch(url, args).then((result) => {

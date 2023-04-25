@@ -9,7 +9,8 @@ import Typography from '@mui/material/Typography'
 import Link from 'next/link'
 
 const CardImgTop = ({ artigo, curtidas }) => {
-  console.log(artigo);
+  const dataFormatter = new Date(artigo.dataPublicacao);
+  const dataPublica = dataFormatter.toLocaleDateString('pt-BR');
 
   const truncateArtigo = (input) =>
     input?.length > 20 ? `${input.substring(0, 20)}...` : input;
@@ -38,6 +39,9 @@ const CardImgTop = ({ artigo, curtidas }) => {
             <ThumbUpIcon sx={{marginRight: 1}} />
             {curtidas}
           </Typography>
+        </Typography>
+        <Typography variant='body2' sx={{ marginTop: 2 }}>
+          Publicado em: {dataPublica}
         </Typography>
       </CardContent>
     </Card>

@@ -97,7 +97,7 @@ const ListaUsuario = () => {
                   <TableCell>{row.email}</TableCell>
                   <TableCell>
                     <Chip
-                      label={row.ativo ? 'Bloqueado' : 'Não Bloqueado'}
+                      label={row.ativo ? 'Não Bloqueado' : 'Bloqueado'}
                       color={statusObj[row.ativo].color}
                       sx={{
                         height: 24,
@@ -117,7 +117,6 @@ const ListaUsuario = () => {
             </TableBody>
           </Table>
         </TableContainer>
-
       </Card>
       <div>
         <Dialog maxWidth={'lg'} onClose={handleClose} aria-labelledby='customized-dialog-title' open={open}>

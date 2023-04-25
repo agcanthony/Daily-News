@@ -1,38 +1,46 @@
+'use client'
+
 // ** React Imports
-import { useState } from 'react'
+import { useState } from 'react';
 
 // ** Next Imports
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 // ** MUI Components
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import MuiCard from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import Checkbox from '@mui/material/Checkbox'
-import FormControl from '@mui/material/FormControl'
-import MuiFormControlLabel from '@mui/material/FormControlLabel'
-import IconButton from '@mui/material/IconButton'
-import InputAdornment from '@mui/material/InputAdornment'
-import InputLabel from '@mui/material/InputLabel'
-import OutlinedInput from '@mui/material/OutlinedInput'
-import TextField from '@mui/material/TextField'
-import Typography from '@mui/material/Typography'
-import { styled, useTheme } from '@mui/material/styles'
+import { yupResolver } from '@hookform/resolvers/yup';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import MuiCard from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Checkbox from '@mui/material/Checkbox';
+import FormControl from '@mui/material/FormControl';
+import MuiFormControlLabel from '@mui/material/FormControlLabel';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import InputLabel from '@mui/material/InputLabel';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import { styled, useTheme } from '@mui/material/styles';
+
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
 
 // ** Icons Imports
-import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
-import EyeOutline from 'mdi-material-ui/EyeOutline'
+import EyeOffOutline from 'mdi-material-ui/EyeOffOutline';
+import EyeOutline from 'mdi-material-ui/EyeOutline';
 
 // ** Configs
-import themeConfig from 'src/configs/themeConfig'
+import themeConfig from 'src/configs/themeConfig';
 
 // ** Layout Import
-import BlankLayout from 'src/@core/layouts/BlankLayout'
+import BlankLayout from 'src/@core/layouts/BlankLayout';
 
 // ** Demo Imports
-import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
+import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration';
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -51,6 +59,15 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
     color: theme.palette.text.secondary
   }
 }))
+
+export const schema = yup.object({
+  email: yup.string()
+      .email('Utilize um e-mail válido')
+      .required('Campo obrigatório'),
+  senha: yup.string()
+      .required('Campo obrigatório')
+}).required();
+
 
 const LoginPage = () => {
   // ** State
@@ -74,6 +91,33 @@ const LoginPage = () => {
   const handleMouseDownPassword = event => {
     event.preventDefault()
   }
+
+  const { register, handleSubmit, reset, formState: { errors } } = useForm({
+    resolver: yupResolver(schema)
+});
+
+const [busy, setBusy] = useState(false);
+
+// const [mensagemErro, setMensagemErro] = useState(null);
+
+const {data:session, status} = useSession();
+const searchParams = useSearchParams();
+
+const onSubmit = (data) => {
+    setBusy(true);
+    signIn("credentials", { username: data.email, password: data.senha })
+}
+
+useEffect(()=>{
+    if(status === "authenticated"){
+        router.replace("/");
+    }
+    else if(status === "unauthenticated" && searchParams.has('error')){
+        setMensagemErro(searchParams.get('error'));
+        router.replace("/login");
+    }
+},[status,mensagemErro])
+
 
   return (
     <Box className='content-center'>
@@ -101,10 +145,12 @@ const LoginPage = () => {
            
           </Box>
           <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
-            <TextField autoFocus fullWidth id='email' label='Email' sx={{ marginBottom: 4 }} />
+            <TextField autoFocus fullWidth id='email' label='Email' sx={{ marginBottom: 4 }} {...register("email")}/>
+            <span className='text-danger'>{errors.email?.message}</span>
             <FormControl fullWidth>
               <InputLabel htmlFor='auth-login-password'>Senha</InputLabel>
               <OutlinedInput
+                {...register("senha")}
                 label='Password'
                 value={values.password}
                 id='auth-login-password'
@@ -124,6 +170,7 @@ const LoginPage = () => {
                 }
               />
             </FormControl>
+            <span className='text-danger'>{errors.senha?.message}</span>
             <Box
               sx={{ mb: 4, display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}
             >
