@@ -24,7 +24,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { styled, useTheme } from '@mui/material/styles';
 
-import { useSearchParams } from "next/navigation";
+
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -98,11 +98,6 @@ const LoginPage = () => {
 
 const [busy, setBusy] = useState(false);
 
-// const [mensagemErro, setMensagemErro] = useState(null);
-
-const {data:session, status} = useSession();
-const searchParams = useSearchParams();
-
 const onSubmit = (data) => {
     setBusy(true);
     signIn("credentials", { username: data.email, password: data.senha })
@@ -116,7 +111,7 @@ useEffect(()=>{
         setMensagemErro(searchParams.get('error'));
         router.replace("/login");
     }
-},[status,mensagemErro])
+},[])
 
 
   return (
