@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-key */
+/* eslint-disable react/jsx-no-undef */
 /* eslint-disable padding-line-between-statements */
 /* eslint-disable newline-before-return */
 import MarkUnreadChatAltIcon from '@mui/icons-material/MarkUnreadChatAlt';
@@ -22,29 +24,39 @@ import { Fragment, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import EditeArtigo from '../artigo/EditeArtigo';
-
-
+import Coments from '../comentarios/coments';
 
 
 const MySwal = withReactContent(Swal);
 
 
-const DashboardTable = () => {  
+
+const DashboardTable = () => {
 
   const [open, setOpen] = useState(false)
+  const [open2, setOpen2] = useState(false)
 
   // const handleClickOpen = () => setOpen(true)
 
   const handleClose = () => {
-    setOpen(false)    
+    setOpen(false)
+  };
+  const handleClose2 = () => {
+    setOpen2(false)
   };
 
+
   const [selectedId, setSelectedId] = useState(null); // Adicionar o estado para armazenar o id selecionado
+  const [selectedId2, setSelectedId2] = useState(null); // Adicionar o estado para armazenar o id selecionado
 
   const handleClickOpen = (id) => {
-    
     setSelectedId(id);
     setOpen(true);
+  };
+
+  const handleClickOpen2 = (id) => {
+    setSelectedId(id);   
+    setOpen2(true);
   };
 
   const statusObj = {
@@ -56,15 +68,11 @@ const DashboardTable = () => {
   }
 
   const [rows, setRows] = useState([]);
-  const [users, setUsers] = useState([]);
-  const [userMap, setUserMap] = useState({});
 
   useEffect(() => {
     fetch('/api/artigo')
       .then(response => response.json())
-      .then(data => {
-        setRows(data)
-      })
+      .then(data => setRows(data))
       .catch(error => console.log(error));
   }, []);
 
@@ -110,12 +118,12 @@ const DashboardTable = () => {
                   </TableCell>
                   <TableCell>
                     <Button sx={{ height: '30px', width: '8px' }} onClick={() => handleClickOpen(row.id)}>
-                      <VisibilityIcon sx={{ height: '32px', width: '32px' }}/>
+                      <VisibilityIcon sx={{ height: '32px', width: '32px' }} />
                     </Button>
                   </TableCell>
                   <TableCell>
-                    <Button sx={{ height: '30px', width: '8px' }} onClick={() => handleClickOpen(row.id)}>
-                      <MarkUnreadChatAltIcon sx={{ height: '32px', width: '32px' }}/>
+                    <Button sx={{ height: '30px', width: '8px' }} onClick={() => handleClickOpen2(row.id)}>
+                      <MarkUnreadChatAltIcon sx={{ height: '32px', width: '32px' }} />
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -144,6 +152,28 @@ const DashboardTable = () => {
           </DialogTitle>
           <DialogContent dividers sx={{ p: 4 }}>
             <EditeArtigo editeArtigo={rows.find((row) => row.id === selectedId)} />
+          </DialogContent>
+        </Dialog>
+      </div >
+      <div>
+        <Dialog maxWidth={'xl'} onClose={handleClose2} aria-labelledby='customized-dialog-title' open={open2}>
+          <DialogTitle id='customized-dialog-title' sx={{ p: 4 }}>
+            <IconButton
+              aria-label='close'
+              onClick={handleClose2}
+              sx={{ top: 10, right: 10, position: 'absolute', color: 'grey.500' }}
+            >
+              <Fragment>
+                <div className='demo-space-x'>
+                  <Fab color='error' aria-label='add' size='small'>
+                    X
+                  </Fab>
+                </div>
+              </Fragment>
+            </IconButton>
+          </DialogTitle>
+          <DialogContent dividers sx={{ p: 4 }}> 
+              <Coments artigo={rows.find((row) => row.id === selectedId)}/>   
           </DialogContent>
         </Dialog>
       </div >

@@ -45,6 +45,19 @@ public class ComentariosController : ControllerBase
         }
     }
 
+    [HttpGet("{id}")]
+    public async Task<ActionResult<IEnumerable<Comentarios>>> Get([FromRoute] int? id)
+    {
+        try
+        {
+            return Ok(await context.Comentarios.Include(p=> p.Artigo).Where(p=> p.ArtigoID == id).ToListAsync());
+        }
+       catch(Exception ex)
+        {
+            return BadRequest("Erro ao consultar os comentarios "+ ex.Message);
+        }
+    }
+
      [HttpPut("{id}")]
     public async Task<ActionResult> Put([FromRoute] int id, [FromBody] Comentarios model)
     {

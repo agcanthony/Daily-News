@@ -46,6 +46,7 @@ export const schema = yup.object({
 }).required();
 
 const EditeArtigo = ({ editeArtigo }) => {
+  
 
   const [isChecked, setIsChecked] = useState(false);
   const [alertStatus, setAlertStatus] = useState(false);

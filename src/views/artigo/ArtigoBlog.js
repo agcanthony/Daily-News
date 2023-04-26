@@ -54,7 +54,17 @@ const ArtigoBlog = () => {
         'Content-Type': 'application/json',
         'x-api-key': process.env.API_KEY
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        Titulo: data.Titulo,
+        SubTitulo: data.SubTitulo,
+        Texto: data.Texto,
+        UrlImg: data.UrlImg,
+        UsuarioID: 53,
+        publicado: true,
+        dataCadastro: new Date,
+        dataPublicacao: new Date(),
+        DataUltimaAlteracao: new Date()
+      }),
       cache: 'no-store'
     };
 
@@ -84,6 +94,7 @@ const ArtigoBlog = () => {
       }
       )
     });
+    window.location.reload();
   }
 
   return (

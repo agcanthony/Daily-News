@@ -60,10 +60,7 @@ const ListaUsuario = () => {
   useEffect(() => {
     fetch('/api/usuario')
       .then(response => response.json())
-      .then(data => {
-        console.log(data)
-        setRows(data)
-      })
+      .then(data => setRows(data))
       .catch(error => console.log(error));
   }, []);
 
