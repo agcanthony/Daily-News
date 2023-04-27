@@ -151,7 +151,7 @@ const PageArtigo = () => {
         </div>
       </section>
       <br />
-      <div className='divCard'>
+      <div className='divCard2'>
         {artigo ? (
           <div className='divArtigo'>
             <div className='imagemArtigo'>
@@ -181,7 +181,7 @@ const PageArtigo = () => {
           </div>
         </form>
       </div>
-      <section className='divCard' >
+      <section className='divCard2' >
         <hr />
         <Card className='curtidas' sx={{ minWidth: 275 }}>
           <CardContent>
@@ -209,7 +209,7 @@ const PageArtigo = () => {
           </CardContent>
         </Card>
       </section>
-      <section className='divCard' >
+      <section className='divCard2' >
         <div className="blog-message">
           <h2>"Leia nossos artigos ou crie o seu próprio: junte-se à comunidade do nosso blog!"</h2>
           <p>Não precisa ser um expert no assunto, basta ter vontade de aprender e compartilhar. Eu estou aqui para te ajudar no que precisar e garantir que o seu artigo seja de qualidade e relevante.</p>
