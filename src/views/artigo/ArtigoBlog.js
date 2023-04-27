@@ -7,10 +7,14 @@ import { TextField } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
+import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import BusyButton from '../../layouts/components/BusyButton';
@@ -34,7 +38,7 @@ export const schema = yup.object({
     .min(50, 'O artigo deve conter, no mínimo, 50 caracteres')
     .required('O artigo é obrigatória'),
   UrlImg: yup.string()
-    .min(5, 'O URL da Imagem deve conter, no mínimo, 5 caracteres')
+    .min(5, 'O URL da Imagem deve conter, no mínimo, 5 caracteres')  
 }).required();
 
 const ArtigoBlog = () => {
@@ -43,6 +47,8 @@ const ArtigoBlog = () => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   });
+
+  const [selectedUserId, setSelectedUserId] = useState("");
 
   const onSubmit = (data) => {
     setBusy(true);
@@ -59,7 +65,7 @@ const ArtigoBlog = () => {
         SubTitulo: data.SubTitulo,
         Texto: data.Texto,
         UrlImg: data.UrlImg,
-        UsuarioID: 58,
+        UsuarioID: selectedUserId,
         publicado: true,
         dataCadastro: new Date,
         dataPublicacao: new Date(),
@@ -94,8 +100,19 @@ const ArtigoBlog = () => {
       }
       )
     });
+
     window.location.reload();
   }
+
+  const [rows, setRows] = useState([]);
+
+
+  useEffect(() => {
+    fetch('/api/usuario')
+      .then(response => response.json())
+      .then(data => setRows(data))
+      .catch(error => console.log(error));
+  }, []);
 
   return (
     <Card>
@@ -160,6 +177,29 @@ const ArtigoBlog = () => {
                 id="fullWidth" />
               <span className='text-danger'>{errors.UrlImg?.message}</span>
               <Typography variant='body2'>Insira um Url de Imagem</Typography>
+            </DemoGrid>
+            <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
+              <Typography>Autor</Typography>
+            </Grid>
+            <DemoGrid item xs={12} sm={10}>
+              <FormControl fullWidth>
+                <InputLabel id="author-label">Selecione um autor</InputLabel>
+                <Select
+                  labelId="autor-label"
+                  value={selectedUserId}
+                  label="Autor"
+                  onChange={(event) => setSelectedUserId(event.target.value)}
+                  error={errors.UsuarioID ? true : false}                  
+                >
+                  {rows.map((user) => (
+                    <MenuItem key={user.id} value={user.id} sx={{ color: "#000000", backgroundColor: "#FFFFFF" }}>
+                      {user.nome}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <span className='text-danger'>{errors.UsuarioID?.message}</span>
+              <Typography variant='body2'>Insira Autor</Typography>
             </DemoGrid>
           </Grid>
           <BusyButton
