@@ -136,7 +136,7 @@ h2 strong {
 
 .divArtigo {
   justify-Content: center;
-  flex-Direction: column;
+  flex-Direction: inherit;
   display: flex;
   align-Items: 'center';  
 }

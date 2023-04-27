@@ -65,3 +65,11 @@ section{
 .modal{
     max-width: 980px !important;
   }
+
+.divCard {
+justify-Content: center; 
+flex-Direction: inherit;
+display: flex; 
+align-Items: 'center'; 
+/* background-color: rgb(0 0 0 / 82%); */
+}

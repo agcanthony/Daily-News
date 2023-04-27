@@ -59,7 +59,7 @@ const ArtigoBlog = () => {
         SubTitulo: data.SubTitulo,
         Texto: data.Texto,
         UrlImg: data.UrlImg,
-        UsuarioID: 53,
+        UsuarioID: 58,
         publicado: true,
         dataCadastro: new Date,
         dataPublicacao: new Date(),
