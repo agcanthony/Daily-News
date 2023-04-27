@@ -40,7 +40,6 @@ const Coments = ({ artigo }) => {
             .catch(error => console.log(error));
     }, []);
 
-    console.log(rows)
     useEffect(() => {
         fetch('/api/usuario')
           .then(response => response.json())

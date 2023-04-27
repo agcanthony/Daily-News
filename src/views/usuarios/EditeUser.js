@@ -6,6 +6,7 @@ import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import CardContent from '@mui/material/CardContent'
+import Fab from '@mui/material/Fab'
 import FormControl from '@mui/material/FormControl'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
@@ -50,7 +51,7 @@ const ResetButtonStyled = styled(Button)(({ theme }) => ({
 export const schema = yup.object({
     Id: yup.number(),
     Nome: yup.string()
-        .min(5, 'O Nome deve conter, no mínimo, 5 caracteres')
+        .min(4, 'O Nome deve conter, no mínimo, 5 caracteres')
         .max(100, 'O Nome deve conter, no máximo, 150 caracteres')
         .required('O Nome é obrigatório'),
     Email: yup.string()
@@ -58,22 +59,23 @@ export const schema = yup.object({
         .max(150, 'O Email deve conter, no máximo, 150 caracteres')
         .required('O Email é obrigatória'),
     Apelido: yup.string()
-        .min(50, 'O Apelido deve conter, no mínimo, 50 caracteres')
+        .min(3, 'O Apelido deve conter, no mínimo, 50 caracteres')
         .required('O Apelido é obrigatória'),
     Senha: yup.string(),
     DataNascimento: yup.date()
         .required('A data é obrigatória'),
     ativo: yup.bool()
         .required('O Status é obrigatória'),
+    CodigoConfirmacao: yup.string(),        
     TipoLoginID: yup.number()
         .required('O Tipo é obrigatória'),
 }).required();
 
-    
+
 const EditeUser = ({ editeUsuario }) => {
-    const dataNascimento = new Date(editeUsuario.dataNascimento);
-    const dataFormatada = dataNascimento.toLocaleDateString('pt-BR');
-    
+    // const dataNascimento = new Date(editeUsuario.dataNascimento);
+    // const dataFormatada = dataNascimento.toLocaleDateString('pt-BR');
+
 
     // ** States
     const [values, setValues] = useState({
@@ -115,39 +117,40 @@ const EditeUser = ({ editeUsuario }) => {
     const [alertStatus, setAlertStatus] = useState(false);
 
     useEffect(() => {
-        if (editeUsuario.bloqueio !== null) {
-            setIsChecked(editeUsuario.bloqueio);
+        if (editeUsuario.ativo !== null) {
+            setIsChecked(editeUsuario.ativo);
         }
-    }, [editeUsuario.bloqueio]);
+    }, [editeUsuario.ativo]);
 
-    const handlebloqueioChange = (id, event) => {
-        setIsChecked(!isChecked);
-        const bloqueio = event.target.checked;
-        updatebloqueio(id, bloqueio);
+    const handleativoChange = (id, event) => {
+        setIsChecked(ativo);
+        const ativo = event.target.checked;
+        updateativo(id, ativo);
     };
 
-    const updatebloqueio = (id, bloqueio) => {
+    const updateativo = (id, ativo) => {
         fetch(`/api/Usuario/${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                bloqueio: bloqueio,
-                texto: editeUsuario.texto,
-                titulo: editeUsuario.titulo,
-                subtitulo: editeUsuario.subTitulo,
-                usuarioID: editeUsuario.usuarioID,
-                id: editeUsuario.id,
-                dataCadastro: editeUsuario.dataCadastro,
-                urlImg: editeUsuario.urlImg
+                ativo: ativo,
+                nome: editeUsuario.nome,
+                email: editeUsuario.email,
+                apelido: editeUsuario.apelido,
+                id: id,
+                senha: editeUsuario.senha,
+                DataNascimento: editeUsuario.dataNascimento,
+                CodigoConfirmacao: editeUsuario.codigoConfirmacao,
+                TipoLoginID: editeUsuario.tipoLoginID
             })
         })
             .then(response => response.json())
             .then(data => {
-                // Atualiza o valor do campo bloqueio na tabela
+                // Atualiza o valor do campo ativo na tabela
                 setRows(rows => {
                     const index = rows.findIndex(row => row.id === id);
                     if (index !== -1) {
-                        const newRow = { ...rows[index], bloqueio: bloqueio };
+                        const newRow = { ...rows[index], ativo: ativo };
 
                         return [...rows.slice(0, index), newRow, ...rows.slice(index + 1)];
                     } else {
@@ -172,14 +175,24 @@ const EditeUser = ({ editeUsuario }) => {
 
     const onSubmit = (data) => {
         setBusy(true);
-        const url = `/api/Usuario/${editeUsuario.id}`;
+        const url = `/api/usuario/${editeUsuario.id}`;
         var args = {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify({
+                ativo: editeUsuario.ativo,
+                nome: editeUsuario.nome,
+                email: editeUsuario.email,
+                apelido: editeUsuario.apelido,
+                id: editeUsuario.id,
+                senha: editeUsuario.senha,
+                DataNascimento: editeUsuario.dataNascimento,
+                CodigoConfirmacao: editeUsuario.codigoConfirmacao,
+                TipoLoginID: editeUsuario.tipoLoginID
+            })
         };
 
         fetch(url, args).then((result) => {
@@ -208,13 +221,39 @@ const EditeUser = ({ editeUsuario }) => {
             }
             )
         });
-        window.location.reload();
+
     }
 
+    const onSubmit2 = (data) => {
+        setBusy(true);
+        const url = `/api/Usuario/${editeUsuario.id}`;
+        var args = {
+            method: 'DELETE'
+        };
+        fetch(url, args).then((result) => {
+            result.text().then((resultData) => {
+                if (result.status == 200) {
+                    window.location.reload();
+
+                }
+                else {
+                    let errorMessage = '';
+                    if (resultData.errors != null) {
+                        const totalErros = Object.keys(resultData.errors).length;
+
+                        for (var i = 0; i < totalErros; i++)
+                            errorMessage = errorMessage + Object.values(resultData.errors)[i] + "<br/>";
+                    }
+                    else
+                        errorMessage = resultData;
+                }
+            });
+        });
+    }
 
     return (
         <CardContent>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <Grid container spacing={7}>
                     <Grid item xs={12} sx={{ marginTop: 4.8, marginBottom: 3 }}>
                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -258,7 +297,7 @@ const EditeUser = ({ editeUsuario }) => {
                         />
                         <span className='text-danger'>{errors.Apelido?.message}</span>
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    {/* <Grid item xs={12} sm={6}>
                         <TextField
                             type='text'
                             fullWidth
@@ -267,7 +306,7 @@ const EditeUser = ({ editeUsuario }) => {
                             {...register("DataNascimento")}
                             defaultValue={dataFormatada} />
                         <span className='text-danger'>{errors.DataNascimento?.message}</span>
-                    </Grid>
+                    </Grid> */}
                     <Grid item xs={12} sm={6}>
                         <TextField
                             fullWidth
@@ -294,8 +333,8 @@ const EditeUser = ({ editeUsuario }) => {
                         <FormControl fullWidth>
                             <InputLabel>Status</InputLabel>
                             <Select label='Status' defaultValue={editeUsuario.ativo} {...register("Ativo")}>
-                                <MenuItem value='true'>Bloqueado</MenuItem>
-                                <MenuItem value='false'>Não Bloqueado</MenuItem>
+                                <MenuItem value='false'>Bloqueado</MenuItem>
+                                <MenuItem value='true'>Não Bloqueado</MenuItem>
                             </Select>
                         </FormControl>
                         <span className='text-danger'>{errors.Ativo?.message}</span>
@@ -328,7 +367,7 @@ const EditeUser = ({ editeUsuario }) => {
                         <span className='text-danger'>{errors.Senha?.message}</span>
                     </Grid>
 
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sm={4} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                         <Button
                             variant='contained'
                             sx={{ marginRight: 3.5 }}
@@ -337,8 +376,13 @@ const EditeUser = ({ editeUsuario }) => {
                             label="Salvar"
                             onClick={() => setAlertStatus(!alertStatus)}
                         >Salvar </Button>
-                        <Button type='reset' variant='outlined' color='secondary'>
-                            Cancelar
+                        {/* <FormGroup row>
+                            <FormControlLabel control={<Switch checked={isChecked} />} onChange={(event) => handleativoChange(editeUsuario.id, event)} />
+                        </FormGroup> */}
+                        <Button>
+                            <Fab color='error' aria-label='edit'>
+                                <Icon icon="material-symbols:delete-outline-sharp" width="32" onClick={onSubmit2} />
+                            </Fab>
                         </Button>
                     </Grid>
                 </Grid>

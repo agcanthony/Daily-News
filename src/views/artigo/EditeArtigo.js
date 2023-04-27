@@ -46,7 +46,7 @@ export const schema = yup.object({
 }).required();
 
 const EditeArtigo = ({ editeArtigo }) => {
-  
+
 
   const [isChecked, setIsChecked] = useState(false);
   const [alertStatus, setAlertStatus] = useState(false);
@@ -145,7 +145,33 @@ const EditeArtigo = ({ editeArtigo }) => {
       }
       )
     });
-    window.location.reload();
+  }
+
+  const onSubmit2 = (data) => {
+    setBusy(true);
+    const url = `/api/artigo/${editeArtigo.id}`;
+    var args = {
+      method: 'DELETE'
+    };
+    fetch(url, args).then((result) => {
+      result.text().then((resultData) => {
+        if (result.status == 200) {
+          window.location.reload();
+
+        }
+        else {
+          let errorMessage = '';
+          if (resultData.errors != null) {
+            const totalErros = Object.keys(resultData.errors).length;
+
+            for (var i = 0; i < totalErros; i++)
+              errorMessage = errorMessage + Object.values(resultData.errors)[i] + "<br/>";
+          }
+          else
+            errorMessage = resultData;
+        }
+      });
+    });
   }
 
   return (
@@ -237,7 +263,7 @@ const EditeArtigo = ({ editeArtigo }) => {
             </FormGroup>
             <Button>
               <Fab color='error' aria-label='edit'>
-                <Icon icon="material-symbols:delete-outline-sharp" width="32" />
+                <Icon icon="material-symbols:delete-outline-sharp" width="32" onClick={onSubmit2} />
               </Fab>
             </Button>
           </Grid>

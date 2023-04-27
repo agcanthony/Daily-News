@@ -1,19 +1,26 @@
+/* eslint-disable padding-line-between-statements */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/no-unknown-property */
 /* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable react/jsx-no-undef */
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Icon } from '@iconify/react';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { Card } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CardContent from '@mui/material/CardContent';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Container, Navbar } from "react-bootstrap";
 import Image from 'react-bootstrap/Image';
+import { useForm } from "react-hook-form";
 import CardComent from 'src/views/cards/CardComent';
+import * as yup from "yup";
+
 
 // ** Layout Import
 import BlankLayout from 'src/@core/layouts/BlankLayout';
@@ -27,22 +34,91 @@ const bull = (
   </Box>
 );
 
+export const schema = yup.object({
+  Texto: yup.string(),
+}).required();
+
+
 const PageArtigo = () => {
+
+  const { register, handleSubmit, reset, formState: { errors } } = useForm({
+    resolver: yupResolver(schema)
+  });
+
   const router = useRouter();
   const [artigo, setArtigo] = useState(null);
+  const [comentarios, setComentarios] = useState([]);
+  const [artigoId, setArtigoId] = useState(null);
 
   useEffect(() => {
     // Recupera o id passado pela URL
     const { id } = router.query;
+    setArtigoId(id);
 
     // Faz a requisição para buscar o artigo correspondente
     fetch(`/api/artigo/${id}`)
       .then(response => response.json())
       .then(data => setArtigo(data[0]))
       .catch(error => console.log(error));
+
+    // Faz a requisição para buscar os comentários correspondentes
+    // fetch(`/api/artigo/${id}/comentarios`)
+    //   .then(response => response.json())
+    //   .then(data => setComentarios(data))
+    //   .catch(error => console.log(error));
   }, [router.query]);
 
+  const [busy, setBusy] = useState(false);
+
   // console.log(response)
+
+  const onSubmit = (data) => {
+    const url = '/api/curtidas';
+    const { id } = router.query; // Recupera o id do artigo da URL
+    const usuarioID = 2; // Substitua este valor pelo ID do usuário que está curtindo
+    const args = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        ArtigoID: id,
+        UsuarioID: usuarioID
+      })
+    };
+
+    fetch(url, args).then((result) => {
+      // ... restante do código
+    });
+    window.location.reload();
+  };
+
+  const onSubmitCom = (data) => {
+    const url = '/api/comentarios';
+    const { id } = router.query; // Recupera o id do artigo da URL
+    const usuarioID = 2; // Substitua este valor pelo ID do usuário que está curtindo
+    const args = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.API_KEY
+      },
+      body: JSON.stringify({
+        Texto: data.Texto,
+        ArtigoID: id,
+        UsuarioID: usuarioID,
+        Data: new Date
+      })
+    };
+
+    fetch(url, args).then((result) => {
+      // ... restante do código
+    });
+    window.location.reload();
+  };
+
 
   return (
     <>
@@ -96,28 +172,40 @@ const PageArtigo = () => {
         )}
 
         <br />
-
-        <div className='curtidas'>         
-          <Link passHref href='/pages/login'>
-            <Button component='a' sx={{ height: 2, width: 3 }}>
-              <ThumbUpIcon sx={{ marginRight: 1, width: '150px' }} />              
-            </Button>            
-          </Link>
-          <p>Curtiu!</p>
-        </div>
+        <form>
+          <div className='curtidas'>
+            <Button component='a' sx={{ height: 2, width: 3 }} type='submit' onClick={onSubmit}>
+              <ThumbUpIcon sx={{ marginRight: 1, width: '150px' }} />
+            </Button>
+            <p>Curtiu!</p>
+          </div>
+        </form>
       </div>
       <section className='divCard' >
         <hr />
         <Card className='curtidas' sx={{ minWidth: 275 }}>
           <CardContent>
             <Typography variant="h5" component="div">
-              Co{bull}men{bull}tá{bull}ri{bull}os
+              Comentários
             </Typography>
           </CardContent>
         </Card>
         <Card>
+          <form onSubmit={handleSubmit(onSubmitCom)}>
+            <CardContent>
+              <Box noValidate component='form' autoComplete='off' sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                <TextField fullWidth label='Deixe um comentário' id='outlined-full-width' sx={{ mb: 4 }} {...register("Texto")} />
+                <span className='text-danger'>{errors.Texto?.message}</span>
+              </Box>
+              <Button variant='contained' endIcon={<Icon icon='mdi:send' />} type='submit'>
+                Enviar
+              </Button>
+            </CardContent>
+          </form>
+        </Card>
+        <Card>
           <CardContent>
-            <CardComent />
+            <CardComent artigo={artigoId} />
           </CardContent>
         </Card>
       </section>
