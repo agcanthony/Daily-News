@@ -126,6 +126,7 @@ const EditeArtigo = ({ editeArtigo }) => {
           //ações em caso de sucesso
           // messageCallback({ tipo: 'sucesso', texto: resultData });
           // console.log(resultData);
+          window.location.reload();
         }
         else {
           //ações em caso de erro

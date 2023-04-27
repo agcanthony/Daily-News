@@ -126,6 +126,7 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [AllowAnonymous]
     public async Task<ActionResult> Put([FromRoute] int id, [FromBody] Usuario model)
     {
         if (id != model.Id)
@@ -147,6 +148,7 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [AllowAnonymous]
     public async Task<ActionResult> Delete([FromRoute] int id)
     {
         try

@@ -64,9 +64,9 @@ export const schema = yup.object({
     Senha: yup.string(),
     DataNascimento: yup.date()
         .required('A data é obrigatória'),
-    ativo: yup.bool()
+    Ativo: yup.bool()
         .required('O Status é obrigatória'),
-    CodigoConfirmacao: yup.string(),        
+    CodigoConfirmacao: yup.string(),
     TipoLoginID: yup.number()
         .required('O Tipo é obrigatória'),
 }).required();
@@ -182,17 +182,7 @@ const EditeUser = ({ editeUsuario }) => {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                ativo: editeUsuario.ativo,
-                nome: editeUsuario.nome,
-                email: editeUsuario.email,
-                apelido: editeUsuario.apelido,
-                id: editeUsuario.id,
-                senha: editeUsuario.senha,
-                DataNascimento: editeUsuario.dataNascimento,
-                CodigoConfirmacao: editeUsuario.codigoConfirmacao,
-                TipoLoginID: editeUsuario.tipoLoginID
-            })
+            body: JSON.stringify(data)
         };
 
         fetch(url, args).then((result) => {
@@ -366,6 +356,11 @@ const EditeUser = ({ editeUsuario }) => {
                         </FormControl>
                         <span className='text-danger'>{errors.Senha?.message}</span>
                     </Grid>
+
+                    <input type="text" name="" value={editeUsuario.id}  {...register("Id")} hidden />
+                    <input type="text" name="" value={editeUsuario.codigoConfirmacao}  {...register("CodigoConfirmacao")} hidden />
+                    <input type="text" name="" value={editeUsuario.tipoLoginID}  {...register("TipoLoginID")} hidden />
+                    <input type="dateTime" name="" value={editeUsuario.dataNascimento}  {...register("DataNascimento")} hidden />
 
                     <Grid item xs={12} sm={4} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                         <Button
