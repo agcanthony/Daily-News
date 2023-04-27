@@ -61,3 +61,7 @@ section{
     justify-content: center;
     display: flex;
 }
+
+.modal{
+    max-width: 980px !important;
+  }

@@ -32,7 +32,9 @@ export const schema = yup.object({
     .required('O subtítulo é obrigatória'),
   Texto: yup.string()
     .min(50, 'O artigo deve conter, no mínimo, 50 caracteres')
-    .required('O artigo é obrigatória')
+    .required('O artigo é obrigatória'),
+  UrlImg: yup.string()
+    .min(5, 'O URL da Imagem deve conter, no mínimo, 5 caracteres')
 }).required();
 
 const ArtigoBlog = () => {
@@ -49,9 +51,21 @@ const ArtigoBlog = () => {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.API_KEY
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify({
+        Titulo: data.Titulo,
+        SubTitulo: data.SubTitulo,
+        Texto: data.Texto,
+        UrlImg: data.UrlImg,
+        UsuarioID: 53,
+        publicado: true,
+        dataCadastro: new Date,
+        dataPublicacao: new Date(),
+        DataUltimaAlteracao: new Date()
+      }),
+      cache: 'no-store'
     };
 
     fetch(url, args).then((result) => {
@@ -60,7 +74,7 @@ const ArtigoBlog = () => {
         if (result.status == 200) {
           //ações em caso de sucesso
           // messageCallback({ tipo: 'sucesso', texto: resultData });
-          handleClose();
+          // console.log(resultData);
         }
         else {
           //ações em caso de erro
@@ -80,6 +94,7 @@ const ArtigoBlog = () => {
       }
       )
     });
+    window.location.reload();
   }
 
   return (
@@ -131,10 +146,23 @@ const ArtigoBlog = () => {
                 rows={12}
               />
               <span className='text-danger'>{errors.Texto?.message}</span>
-              <Typography variant='body2'>escreva um artigo</Typography>
+              <Typography variant='body2'>Escreva um artigo</Typography>
+            </DemoGrid>
+            <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
+              <Typography>Imagem URL</Typography>
+            </Grid>
+            <DemoGrid item xs={12} sm={10}>
+              <TextField
+                className="form-control"
+                {...register("UrlImg")}
+                fullWidth
+                label="Imagem URL"
+                id="fullWidth" />
+              <span className='text-danger'>{errors.UrlImg?.message}</span>
+              <Typography variant='body2'>Insira um Url de Imagem</Typography>
             </DemoGrid>
           </Grid>
-          <BusyButton 
+          <BusyButton
             type="submit"
             label="Salvar"
             busy={busy}

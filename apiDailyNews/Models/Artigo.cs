@@ -1,8 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public class Artigo
 {
-    // [Required]
+    [Key]
     public int Id { get; set; }
     [Required(ErrorMessage = "O texto é obrigatório")]
     public string Texto { get; set; } = null!;
@@ -14,16 +15,27 @@ public class Artigo
     [MaxLength(100, ErrorMessage = "O Sub-título pode conter, no máximo, 100 caracteres")]
     public string SubTitulo { get; set; } = null!;
 
-    public bool publicado { get; set; } = false;
-    // [Required]
-    public DateTime DataCadastro { get; set; }
-    // [Required]
-    public DateTime DataPublicacao { get; set; }
-    // [Required]
-    public DateTime DataUltimaAlteracao { get; set; }
+    public bool? publicado { get; set; }
 
-    // [Required(ErrorMessage = "É obrigatório informar um autor.")]
-    public int idUsuario { get; set; } = 1;
+    public DateTime? DataCadastro { get; set; }
 
-    // public Usuario? Usuario { get; set; }
+    public DateTime? DataPublicacao { get; set; }
+
+    public DateTime? DataUltimaAlteracao { get; set; }
+
+    [Required(ErrorMessage = "É obrigatório informar um autor.")]
+    public int? UsuarioID { get; set; }
+
+    public string? UrlImg { get; set; }
+
+   
+    [ForeignKey(nameof(UsuarioID))]
+    public virtual Usuario? Usuario { get; set; }
+
+     [InverseProperty("Artigo")]
+    public virtual List<Comentarios> Comentarios { get; set; } = new List<Comentarios>();
+
+    [InverseProperty("Artigo")]
+    public virtual List<Curtidas> Curtidas { get; set; } = new List<Curtidas>();
+
 }
